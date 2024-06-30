@@ -1,5 +1,5 @@
 variable "env" {}
 variable "vpc_cidr" {}
-variable "public_subent" {}
-variable "private_subent" {}
+variable "public_subnet" {}
+variable "private_subnet" {}
 variable "azs" {}
