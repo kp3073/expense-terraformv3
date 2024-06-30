@@ -25,4 +25,5 @@ resource "aws_subnet" "private_subent" {
   tags = {
     Name = "private-subent-${count.index}"
 
+  }
 }
