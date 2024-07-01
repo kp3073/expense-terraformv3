@@ -50,10 +50,11 @@ resource "aws_nat_gateway" "ngw" {
   }
 }
 
-resource "aws_vpc_peering_connection" "foo" {
+resource "aws_vpc_peering_connection" "peering" {
   peer_owner_id = var.account_no
   peer_vpc_id   = aws_vpc.default_vpc_id.id
   vpc_id        = aws_vpc.main.id
+  auto_accept = "true"
 }
 
 resource "aws_route_table" "public" {
