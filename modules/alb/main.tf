@@ -21,7 +21,7 @@ resource "aws_security_group" "sg" {
   tags = {
     Name = "${var.env}-${var.alb_type}"
   }
-
+}
 
 resource "aws_lb" "alb" {
   name               = "${var.env}-${var.alb_type}"
