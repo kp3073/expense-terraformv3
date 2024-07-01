@@ -1,4 +1,4 @@
-resource "aws_vpc" "main" {
+resource "aws_vpc" "ain" {
   cidr_block = var.vpc_cidr
   tags = {
     Name = "${var.env}-vpc"
@@ -26,4 +26,16 @@ resource "aws_subnet" "private_subent" {
     Name = "private-subent-${count.index+1}"
 
   }
+}
+
+resource "aws_internet_gateway" "igw" {
+  vpc_id = aws_vpc.main.id
+
+  tags = {
+    Name = "${var.env}-igw"
+  }
+}
+
+resource "aws_eip" "eip" {
+  domain   = "vpc"
 }
