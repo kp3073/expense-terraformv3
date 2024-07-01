@@ -6,7 +6,7 @@ resource "aws_vpc" "main" {
 }
 
 resource "aws_subnet" "public_subnet" {
-  count = length(var.public_subnet)
+  count = length(var.public_subent)
   vpc_id     = aws_vpc.main.id
   cidr_block = var.public_subent[count.index]
   availability_zone = var.azs[count.index]
@@ -17,7 +17,7 @@ resource "aws_subnet" "public_subnet" {
 }
 
 resource "aws_subnet" "private_subnet" {
-  count = length(var.private_subnet)
+  count = length(var.private_subent)
   vpc_id = aws_vpc.main.id
   cidr_block = var.private_subent[count.index]
   availability_zone = var.azs[count.index]
@@ -43,7 +43,7 @@ resource "aws_eip" "ngw" {
 
 resource "aws_nat_gateway" "ngw" {
   allocation_id = aws_eip.ngw.id
-  subnet_id     = aws_subnet.public_subnet[0].id
+  subnet_id     = aws_subnet.public_subent[0].id
 
   tags = {
     Name = "${var.env}-ngw"
