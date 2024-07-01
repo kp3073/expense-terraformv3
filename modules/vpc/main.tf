@@ -5,25 +5,25 @@ resource "aws_vpc" "main" {
   }
 }
 
-resource "aws_subnet" "public_subent" {
-  count = length(var.public_subent)
+resource "aws_subnet" "public_subnet" {
+  count = length(var.public_subnet)
   vpc_id     = aws_vpc.main.id
   cidr_block = var.public_subent[count.index]
   availability_zone = var.azs[count.index]
 
   tags = {
-    Name = "public-subent-${count.index+1}"
+    Name = "public-subnet-${count.index+1}"
   }
 }
 
-resource "aws_subnet" "private_subent" {
-  count = length(var.private_subent)
+resource "aws_subnet" "private_subnet" {
+  count = length(var.private_subnet)
   vpc_id = aws_vpc.main.id
   cidr_block = var.private_subent[count.index]
   availability_zone = var.azs[count.index]
 
   tags = {
-    Name = "private-subent-${count.index+1}"
+    Name = "private-subnet-${count.index+1}"
 
   }
 }
