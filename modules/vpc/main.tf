@@ -36,6 +36,16 @@ resource "aws_internet_gateway" "igw" {
   }
 }
 
-resource "aws_eip" "eip" {
+resource "aws_eip" "ngw" {
   domain   = "vpc"
+}
+
+
+resource "aws_nat_gateway" "ngw" {
+  allocation_id = aws_eip.ngw.id
+  subnet_id     = aws_subnet.public_subnet[0].id
+
+  tags = {
+    Name = "${var.env}-ngw"
+  }
 }
