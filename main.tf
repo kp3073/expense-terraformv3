@@ -8,4 +8,5 @@ module "vpc" {
   default_vpc_id = var.default_vpc_id
   account_no =  var.account_no
   default_vpc_cidr = var.default_vpc_cidr
+  default_vpc_route_table = var.default_vpc_route_table
 }
