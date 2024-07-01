@@ -20,3 +20,13 @@ vpc_id = module.vpc.vpc_id
 allow_sg_cidr = "0.0.0.0/0"
 subnet = module.vpc.public_subent
 }
+
+module "private_alb" {
+  source = "./modules/alb"
+env = var.env
+alb_type = "private"
+internal = true
+vpc_id = module.vpc.vpc_id
+allow_sg_cidr = var.vpc_cidr
+subnet = module.vpc.private_subent
+}
