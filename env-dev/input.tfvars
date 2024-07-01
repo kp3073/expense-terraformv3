@@ -7,3 +7,4 @@ private_subent = ["10.0.2.0/24", "10.0.3.0/24"]
 azs= ["us-east-1a", "us-east-1b"]
 account_no = "471112727668"
 default_vpc_id = "vpc-01c37a20026cef1d0"
+default_vpc_cidr = "172.31.0.0/16"
