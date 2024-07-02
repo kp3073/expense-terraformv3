@@ -5,10 +5,10 @@ resource "aws_vpc" "main" {
   }
 }
 
-resource "aws_subnet" "public_subent" {
-  count = length(var.public_subent)
+resource "aws_subnet" "public_subnet" {
+  count = length(var.public_subnet)
   vpc_id     = aws_vpc.main.id
-  cidr_block = var.public_subent[count.index]
+  cidr_block = var.public_subnet[count.index]
   availability_zone = var.azs[count.index]
 
   tags = {
@@ -16,10 +16,10 @@ resource "aws_subnet" "public_subent" {
   }
 }
 
-resource "aws_subnet" "private_subent" {
-  count = length(var.private_subent)
+resource "aws_subnet" "private_subnet" {
+  count = length(var.private_subnet)
   vpc_id = aws_vpc.main.id
-  cidr_block = var.private_subent[count.index]
+  cidr_block = var.private_subnet[count.index]
   availability_zone = var.azs[count.index]
 
   tags = {
@@ -46,7 +46,7 @@ resource "aws_eip" "ngw" {
 
 resource "aws_nat_gateway" "ngw" {
   allocation_id = aws_eip.ngw.id
-  subnet_id     = aws_subnet.public_subent[0].id
+  subnet_id     = aws_subnet.public_subnet[0].id
 
   tags = {
     Name = "${var.env}-ngw"
@@ -96,13 +96,13 @@ resource "aws_route" "default-route-tabel" {
 }
 
 resource "aws_route_table_association" "public" {
-  count = length(var.public_subent)
-  subnet_id      = aws_subnet.public_subent[count.index].id
+  count = length(var.public_subnet)
+  subnet_id      = aws_subnet.public_subnet[count.index].id
   route_table_id = aws_route_table.public.id
 }
 
 resource "aws_route_table_association" "private" {
-  count = length(var.private_subent)
-  subnet_id      = aws_subnet.private_subent[count.index].id
+  count = length(var.private_subnet)
+  subnet_id      = aws_subnet.private_subnet[count.index].id
   route_table_id = aws_route_table.private.id
 }

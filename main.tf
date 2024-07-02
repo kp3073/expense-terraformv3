@@ -2,8 +2,8 @@ module "vpc" {
   source = "./modules/vpc"
   vpc_cidr = var.vpc_cidr
   env = var.env
-  public_subent  = var.public_subent
-  private_subent = var.private_subent
+  public_subnet  = var.public_subnet
+  private_subnet = var.private_subnet
   azs = var.azs
   default_vpc_id = var.default_vpc_id
   account_no =  var.account_no
@@ -18,7 +18,7 @@ alb_type = "public"
 internal = false
 vpc_id = module.vpc.vpc_id
 allow_sg_cidr = "0.0.0.0/0"
-subnet = module.vpc.public_subent
+subnet = module.vpc.public_subnet
 }
 
 module "private_alb" {
@@ -28,5 +28,16 @@ alb_type = "private"
 internal = true
 vpc_id = module.vpc.vpc_id
 allow_sg_cidr = var.vpc_cidr
-subnet = module.vpc.private_subent
+subnet = module.vpc.private_subnet
+}
+
+module "frontend" {
+  source = "./modules/app"
+  app_port      = 80
+  component     = frontend
+  env           = var.env
+  instance_type = "t3.micro"
+  vpc_cidr      = var.vpc_cidr
+  vpc_id        = module.vpc.vpc_id
+  private_subnet = module.vpc.private_subnet
 }
