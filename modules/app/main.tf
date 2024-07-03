@@ -33,7 +33,7 @@ resource "aws_security_group" "sg" {
 }
 
 
-resource "aws_launch_template" "template" {
+resource "aws_launch_template" "temp" {
   name = "${var.env}-${var.component}"
   image_id = data.aws_ami.ami_id.id
   instance_type = var.instance_type
@@ -57,7 +57,7 @@ resource "aws_autoscaling_group" "asg" {
   vpc_zone_identifier = var.subnets
 
   launch_template {
-    id      = aws_launch_template.template.id
+    id      = aws_launch_template.temp.id
     version = "$Latest"
   }
 }
