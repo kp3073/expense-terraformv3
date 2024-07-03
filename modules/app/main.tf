@@ -5,7 +5,8 @@ resource "aws_security_group" "sg" {
 
 
 
-  egress {
+  ingress {
+    description = "HTTP"
     from_port        = var.app_port
     to_port          = var.app_port
     protocol         = "tcp"
@@ -13,6 +14,14 @@ resource "aws_security_group" "sg" {
   }
 
   ingress {
+    description = "ssh"
+    from_port        = 22
+    to_port          = 22
+    protocol         = "tcp"
+    cidr_blocks      = var.bastion_node_cidr
+  }
+
+  egress {
     from_port        = 0
     to_port          = 0
     protocol = "-1"

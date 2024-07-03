@@ -5,3 +5,4 @@ variable "vpc_id" {}
 variable "app_port" {}
 variable "subnets" {}
 variable "vpc_cidr" {}
+variable "bastion_node_cidr" {}
