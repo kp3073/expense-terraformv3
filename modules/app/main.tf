@@ -29,7 +29,7 @@ resource "aws_launch_template" "template" {
   image_id = data.aws_ami.ami_id.id
   instance_type = var.instance_type
   vpc_security_group_ids = [aws_security_group.sg.id]
-  user_data = base64decode(templatefile("${path.module}/userdata.sh",{
+  user_data = base64encode(templatefile("${path.module}/userdata.sh",{
   role_name = var.component
 }))
   tag_specifications {
