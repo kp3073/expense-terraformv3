@@ -50,7 +50,7 @@ resource "aws_iam_role" "test_role" {
   })
 
   inline_policy {
-    name = "my_inline_policy"
+    name = "${var.env}-${var.component}-policy"
 
     policy = jsonencode({
       "Version": "2012-10-17",
@@ -80,6 +80,9 @@ resource "aws_launch_template" "temp" {
   image_id = data.aws_ami.ami_id.id
   instance_type = var.instance_type
   vpc_security_group_ids = [aws_security_group.sg.id]
+
+  iam_instance_profile = aws_iam_role.test_role.name
+
   user_data = base64encode(templatefile("${path.module}/userdata.sh",{
   role_name = var.component
 }))
