@@ -74,7 +74,10 @@ resource "aws_iam_role" "test_role" {
     tag-key = "${var.env}-${var.component}-role"
   }
 }
-
+resource "aws_iam_instance_profile" "instance_profile" {
+  name = "${var.env}-${var.component}-profile"
+  role = aws_iam_role.test_role.name
+}
 resource "aws_launch_template" "temp" {
   name = "${var.env}-${var.component}"
   image_id = data.aws_ami.ami_id.id
@@ -82,7 +85,7 @@ resource "aws_launch_template" "temp" {
   vpc_security_group_ids = [aws_security_group.sg.id]
 
   iam_instance_profile  {
-    name = aws_iam_role.test_role.name
+    name = aws_iam_instance_profile.instance_profile.name
   }
 
   user_data = base64encode(templatefile("${path.module}/userdata.sh",{
