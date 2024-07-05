@@ -11,34 +11,56 @@ module "vpc" {
   default_vpc_route_table_id = var.default_vpc_route_table_id
 }
 
-module "public_alb" {
-  source        = "./modules/alb"
-  env           = var.env
-  alb_type      = "public"
-  internal      = false
-  vpc_id        = module.vpc.vpc_id
-  allow_sg_cidr = "0.0.0.0/0"
-  subnet        = module.vpc.public_subnet
-}
+# module "public_alb" {
+#   source        = "./modules/alb"
+#   env           = var.env
+#   alb_type      = "public"
+#   internal      = false
+#   vpc_id        = module.vpc.vpc_id
+#   allow_sg_cidr = "0.0.0.0/0"
+#   subnet        = module.vpc.public_subnet
+# }
+#
+# module "private_alb" {
+#   source        = "./modules/alb"
+#   env           = var.env
+#   alb_type      = "private"
+#   internal      = true
+#   vpc_id        = module.vpc.vpc_id
+#   allow_sg_cidr = var.vpc_cidr
+#   subnet        = module.vpc.private_subnet
+# }
+#
+# module "frontend" {
+#   source            = "./modules/app"
+#   app_port          = 80
+#   component         = "frontend"
+#   env               = var.env
+#   instance_type     = "t3.small"
+#   vpc_cidr          = var.vpc_cidr
+#   vpc_id            = module.vpc.vpc_id
+#   subnets           = module.vpc.private_subnet
+#   bastion_node_cidr = var.bastion_node_cidr
+# }
+#
+#
+# module "backend" {
+#   source            = "./modules/app"
+#   app_port          = 80
+#   component         = "backend"
+#   env               = var.env
+#   instance_type     = "t3.small"
+#   vpc_cidr          = var.vpc_cidr
+#   vpc_id            = module.vpc.vpc_id
+#   subnets           = module.vpc.private_subnet
+#   bastion_node_cidr = var.bastion_node_cidr
+# }
 
-module "private_alb" {
-  source        = "./modules/alb"
+module "mysql" {
+  source = "./modules/rds"
+  vpc_cidr      = var.vpc_cidr
+  componant     = "mysql"
   env           = var.env
-  alb_type      = "private"
-  internal      = true
+  subnets       = module.vpc.private_subnet
   vpc_id        = module.vpc.vpc_id
-  allow_sg_cidr = var.vpc_cidr
-  subnet        = module.vpc.private_subnet
-}
-
-module "frontend" {
-  source            = "./modules/app"
-  app_port          = 80
-  component         = "frontend"
-  env               = var.env
-  instance_type     = "t3.small"
-  vpc_cidr          = var.vpc_cidr
-  vpc_id            = module.vpc.vpc_id
-  subnets           = module.vpc.private_subnet
-  bastion_node_cidr = var.bastion_node_cidr
 }
