@@ -6,3 +6,4 @@ variable "allow_sg_cidr" {}
 variable "subnet" {}
 variable "dns_name" {}
 variable "zone_id" {}
+variable "tg_arn" {}

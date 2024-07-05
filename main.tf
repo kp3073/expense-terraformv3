@@ -30,7 +30,8 @@ module "private_alb" {
   allow_sg_cidr = var.vpc_cidr
   subnet        = module.vpc.private_subnet
   dns_name      = "backend.${var.env}.aligntune.online"
-  zone_id   = "Z03008653NMBFHGJP7YNJ"
+  zone_id       = "Z03008653NMBFHGJP7YNJ"
+  tg_arn        = module.backend.tg_arm
 }
 #
 # module "frontend" {
@@ -47,6 +48,7 @@ module "private_alb" {
 #
 #
 module "backend" {
+  depends_on = [module.mysql]
   source            = "./modules/app"
   app_port          = 80
   component         = "backend"
