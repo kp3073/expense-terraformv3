@@ -30,7 +30,7 @@ module "private_alb" {
   allow_sg_cidr = var.vpc_cidr
   subnet        = module.vpc.private_subnet
   dns_name      = "backend.${var.env}.aligntune.online"
-  domain_name   = "Z03008653NMBFHGJP7YNJ"
+  zone_id   = "Z03008653NMBFHGJP7YNJ"
 }
 #
 # module "frontend" {
