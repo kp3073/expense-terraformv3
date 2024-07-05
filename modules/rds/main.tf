@@ -43,3 +43,13 @@ resource "aws_rds_cluster" "main" {
   backup_retention_period = 5
   preferred_backup_window = "07:00-09:00"
 }
+
+
+resource "aws_rds_cluster_instance" "main" {
+  count              = 2
+  identifier         = "${var.env}-${var.componant}-${count.index}"
+  cluster_identifier = aws_rds_cluster.main.id
+  instance_class     = "db.r4.large"
+  engine             = aws_rds_cluster.main.engine
+  engine_version     = aws_rds_cluster.main.engine_version
+}
