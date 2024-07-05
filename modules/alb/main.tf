@@ -43,7 +43,7 @@ resource "aws_route53_record" "main" {
   records = [aws_lb.alb.dns_name]
 }
 
-resource "aws_lb_listener" "front_end" {
+resource "aws_lb_listener" "frontend" {
   load_balancer_arn = aws_lb.alb.arn
   port              = "80"
   protocol          = "HTTP"
@@ -52,3 +52,4 @@ resource "aws_lb_listener" "front_end" {
     type             = "forward"
     target_group_arn = var.tg_arn
   }
+}
