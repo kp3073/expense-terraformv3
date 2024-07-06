@@ -114,7 +114,6 @@ resource "aws_autoscaling_group" "asg" {
   }
 }
 
-
 resource "aws_lb_target_group" "tg" {
   name     = "${var.env}-${var.component}-tg"
   port     = var.app_port
@@ -125,7 +124,6 @@ resource "aws_lb_target_group" "tg" {
     healthy_threshold = 2
     interval = 5
     unhealthy_threshold = 2
-    port = var.app_port
     path = "/health"
     timeout = 3
 
