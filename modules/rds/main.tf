@@ -33,7 +33,7 @@ resource "aws_db_subnet_group" "main" {
 }
 
 resource "aws_rds_cluster" "main" {
-  cluster_identifier      = "aurora-cluster-demo"
+  cluster_identifier      = "aurora-cluster-dev"
   engine                  = "aurora-mysql"
   engine_version          = "5.7.mysql_aurora.2.11.3"
   db_subnet_group_name = aws_db_subnet_group.main.name
@@ -46,9 +46,9 @@ resource "aws_rds_cluster" "main" {
 
 resource "aws_rds_cluster_instance" "main" {
   count              = 1
-  identifier         = "${var.env}-${var.componant}-${count.index}"
+  identifier         = "${var.env}-${var.componant}-instance${count.index}"
   cluster_identifier = aws_rds_cluster.main.id
-  instance_class     = "db.r4.large"
+  instance_class     = "db.t3.medium"
   engine             = aws_rds_cluster.main.engine
   engine_version     = aws_rds_cluster.main.engine_version
 }
