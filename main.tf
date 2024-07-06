@@ -24,7 +24,18 @@ module "vpc" {
 #   tg_arn        = module.frontend.tg_arm
 # }
 #
-
+module "private_alb" {
+  source        = "./modules/alb"
+  env           = var.env
+  alb_type      = "private"
+  internal      = true
+  vpc_id        = module.vpc.vpc_id
+  allow_sg_cidr = var.vpc_cidr
+  subnet        = module.vpc.private_subnet
+  dns_name      = "backend-${var.env}.aligntune.online"
+  zone_id       = "Z03008653NMBFHGJP7YNJ"
+  tg_arn        = module.backend.tg_arm
+}
 
 # module "frontend" {
 #   source            = "./modules/app"
@@ -41,7 +52,7 @@ module "vpc" {
 #   min_size           = var.min_size
 # }
 
-#
+
 module "backend" {
   depends_on = [module.mysql]
   source            = "./modules/app"
