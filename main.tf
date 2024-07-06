@@ -32,7 +32,7 @@ module "vpc" {
 #   vpc_id        = module.vpc.vpc_id
 #   allow_sg_cidr = var.vpc_cidr
 #   subnet        = module.vpc.private_subnet
-#   dns_name      = "backend.${var.env}.aligntune.online"
+#   dns_name      = "backend-${var.env}.aligntune.online"
 #   zone_id       = "Z03008653NMBFHGJP7YNJ"
 #   tg_arn        = module.backend.tg_arm
 # }
