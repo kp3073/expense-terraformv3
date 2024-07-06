@@ -54,7 +54,7 @@ module "private_alb" {
 
 
 module "backend" {
-  depends_on = [module.mysql]
+  depends_on        = [module.mysql]
   source            = "./modules/app"
   app_port          = 8080
   component         = "backend"
@@ -70,7 +70,7 @@ module "backend" {
 }
 
 module "mysql" {
-  source = "./modules/rds"
+  source        = "./modules/rds"
   vpc_cidr      = var.vpc_cidr
   componant     = "mysql"
   env           = var.env
