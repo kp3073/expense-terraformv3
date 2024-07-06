@@ -56,7 +56,7 @@ module "private_alb" {
 module "backend" {
   depends_on        = [module.mysql]
   source            = "./modules/app"
-  app_port          = 8080
+  app_port          = "8080"
   component         = "backend"
   env               = var.env
   instance_type     = "t3.small"
