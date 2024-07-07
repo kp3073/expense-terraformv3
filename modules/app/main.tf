@@ -104,6 +104,8 @@ resource "aws_autoscaling_group" "asg" {
   name               = "${var.env}-${var.component}"
   vpc_zone_identifier = var.subnets
   target_group_arns = [aws_lb_target_group.tg.arn]
+  max_size                  = 1
+  min_size                  = 1
 
   launch_template {
     id      = aws_launch_template.temp.id
