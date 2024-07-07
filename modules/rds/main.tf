@@ -1,5 +1,5 @@
 resource "aws_security_group" "main" {
-  name        = "${var.env}-${var.componant}-sg"
+  name        = "${var.env}-${var.component}-sg"
   description = "application security group"
   vpc_id      = var.vpc_id
 
@@ -19,16 +19,16 @@ resource "aws_security_group" "main" {
     cidr_blocks      = ["0.0.0.0/0"]
   }
   tags = {
-    Name = "${var.env}-${var.componant}-sg"
+    Name = "${var.env}-${var.component}-sg"
   }
 }
 
 resource "aws_db_subnet_group" "main" {
-  name       = "${var.env}-${var.componant} -sbgroup"
+  name       = "${var.env}-${var.component} -sbgroup"
   subnet_ids = var.subnets
 
   tags = {
-    Name = "${var.env}-${var.componant} -sbgroup"
+    Name = "${var.env}-${var.component} -sbgroup"
   }
 }
 
@@ -47,7 +47,7 @@ resource "aws_rds_cluster" "main" {
 
 resource "aws_rds_cluster_instance" "main" {
   count              = 1
-  identifier         = "${var.env}-${var.componant}-instance${count.index}"
+  identifier         = "${var.env}-${var.component}-instance${count.index}"
   cluster_identifier = aws_rds_cluster.main.id
   instance_class     = "db.t3.medium"
   engine             = aws_rds_cluster.main.engine

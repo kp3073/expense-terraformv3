@@ -47,10 +47,10 @@ module "frontend" {
   vpc_id            = module.vpc.vpc_id
   subnets           = module.vpc.private_subnet
   bastion_node_cidr = var.bastion_node_cidr
-}
+ }
 
 
-module "backend" {
+  module "backend" {
   depends_on        = [module.mysql]
   source            = "./modules/app"
   app_port          = 8080
@@ -61,14 +61,15 @@ module "backend" {
   vpc_id            = module.vpc.vpc_id
   subnets           = module.vpc.private_subnet
   bastion_node_cidr = var.bastion_node_cidr
-
 }
+
 
 module "mysql" {
   source        = "./modules/rds"
   vpc_cidr      = var.vpc_cidr
-  componant     = "mysql"
+  component     = "mysql"
   env           = var.env
   subnets       = module.vpc.private_subnet
   vpc_id        = module.vpc.vpc_id
+
 }
