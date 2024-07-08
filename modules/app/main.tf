@@ -32,7 +32,7 @@ resource "aws_security_group" "sg" {
   }
 }
 
-resource "aws_iam_role" "test_role" {
+resource "aws_iam_role" "iam_role" {
   name = "${var.env}-${var.component}-role"
 
   assume_role_policy = jsonencode({
@@ -77,7 +77,7 @@ resource "aws_iam_role" "test_role" {
 }
 resource "aws_iam_instance_profile" "instance_profile" {
   name = "${var.env}-${var.component}-profile"
-  role = aws_iam_role.test_role.name
+  role = aws_iam_role.iam_role.name
 }
 resource "aws_launch_template" "temp" {
   name = "${var.env}-${var.component}"
@@ -106,6 +106,7 @@ resource "aws_autoscaling_group" "asg" {
   target_group_arns = [aws_lb_target_group.tg.arn]
   max_size                  = 1
   min_size                  = 1
+  desired_capacity          = 1
 
   launch_template {
     id      = aws_launch_template.temp.id
