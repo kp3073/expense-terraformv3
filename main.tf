@@ -45,7 +45,7 @@ module "frontend" {
   instance_type     = "t3.small"
   vpc_cidr          = var.vpc_cidr
   vpc_id            = module.vpc.vpc_id
-  subnets           = module.vpc.public_subnet
+  subnets           = module.vpc.private_subnet
   bastion_node_cidr = var.bastion_node_cidr
 }
 
