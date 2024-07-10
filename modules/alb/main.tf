@@ -12,13 +12,13 @@ resource "aws_security_group" "sg" {
     cidr_blocks      = [var.allow_sg_cidr]
   }
 #
-#   ingress {
-#     description = "HTTPS"
-#     from_port   = 443
-#     to_port     = 443
-#     protocol    = "tcp"
-#     cidr_blocks = [var.allow_sg_cidr]
-#   }
+  ingress {
+    description = "HTTPS"
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
+    cidr_blocks = [var.allow_sg_cidr]
+  }
   egress {
     from_port        = 0
     to_port          = 0
@@ -52,10 +52,23 @@ resource "aws_route53_record" "main" {
 
 
 
-resource "aws_lb_listener" "listener" {
+resource "aws_lb_listener" "listener-http" {
   load_balancer_arn = aws_lb.alb.arn
   port              = "80"
   protocol          = "HTTP"
+
+  default_action {
+    type             = "forward"
+    target_group_arn = var.tg_arn
+  }
+}
+
+resource "aws_lb_listener" "listener-https" {
+  load_balancer_arn = aws_lb.alb.arn
+  port              = "443"
+  protocol          = "HTTPS"
+  ssl_policy        = "ELBSecurityPolicy-2016-08"
+  certificate_arn   = "arn:aws:acm:us-east-1:471112727668:certificate/465655e6-3a8f-4aff-af08-99c2764bee2e"
 
   default_action {
     type             = "forward"
