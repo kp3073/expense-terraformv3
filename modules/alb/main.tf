@@ -46,7 +46,7 @@ resource "aws_route53_record" "main" {
   zone_id = var.zone_id
   name    = var.dns_name
   type    = "CNAME"
-  ttl     = 300
+  ttl     = 30
   records = [aws_lb.alb.dns_name]
 }
 
