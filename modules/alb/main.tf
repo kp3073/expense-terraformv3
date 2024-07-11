@@ -68,8 +68,8 @@ resource "aws_lb_listener" "listener-http-public" {
   }
 }
 
-resource "aws_lb_listener" "listener-http-privet" {
-  count             = var.alb_type == "privet" ? 1 : 0
+resource "aws_lb_listener" "listener-http-private" {
+  count             = var.alb_type == "private" ? 1 : 0
   load_balancer_arn = aws_lb.alb.arn
   port              = "80"
   protocol          = "HTTP"
