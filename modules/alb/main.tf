@@ -52,7 +52,24 @@ resource "aws_route53_record" "main" {
 
 
 
-resource "aws_lb_listener" "listener-http" {
+resource "aws_lb_listener" "listener-http-public" {
+  count             = var.alb_type == "public" ? 1 : 0
+  load_balancer_arn = aws_lb.alb.arn
+  port              = "80"
+  protocol          = "HTTP"
+
+  default_action {
+     type             = "redirect"
+    redirect {
+      port = "443"
+      protocol = "HTTPS"
+      status_code = "HTTP_301"
+    }
+  }
+}
+
+resource "aws_lb_listener" "listener-http-privet" {
+  count             = var.alb_type == "privet" ? 1 : 0
   load_balancer_arn = aws_lb.alb.arn
   port              = "80"
   protocol          = "HTTP"
