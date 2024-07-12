@@ -11,4 +11,3 @@ bastion_node_cidr = ["172.31.30.152/32"]
 max_size = 10
 min_size = 2
 desired_capacity = 2
-# prometheus_cidr = []
