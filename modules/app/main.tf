@@ -21,6 +21,14 @@ resource "aws_security_group" "sg" {
     cidr_blocks      = var.bastion_node_cidr
   }
 
+#   ingress {
+#     description = "PROMETHEUS"
+#     from_port        = 9100
+#     to_port          = 9100
+#     protocol         = "tcp"
+#     cidr_blocks      = [var.prometheus_cidr]
+#   }
+
   egress {
     from_port        = 0
     to_port          = 0
@@ -114,6 +122,12 @@ resource "aws_autoscaling_group" "asg" {
     id      = aws_launch_template.temp.id
     version = "$Latest"
   }
+
+#   tag {
+#     key                 = "project"
+#     propagate_at_launch = false
+#     value               = "expense"
+#   }
 }
 
 resource "aws_lb_target_group" "tg" {
