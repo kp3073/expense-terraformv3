@@ -68,7 +68,6 @@ resource "aws_route53_record" "main" {
 # }
 
 resource "aws_lb_listener" "listener-http-private" {
-  count             = var.alb_type == "private" ? 1 : 0
   load_balancer_arn = aws_lb.alb.arn
   port              = "80"
   protocol          = "HTTP"
@@ -81,7 +80,7 @@ resource "aws_lb_listener" "listener-http-private" {
 
 
 resource "aws_lb_listener" "listener-https" {
-  count             = var.alb_type == "public" ? 1 : 0
+#   count             = var.alb_type == "public" ? 1 : 0
   load_balancer_arn = aws_lb.alb.arn
   port              = "443"
   protocol          = "HTTPS"
