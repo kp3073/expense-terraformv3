@@ -123,11 +123,11 @@ resource "aws_autoscaling_group" "asg" {
     version = "$Latest"
   }
 
-#   tag {
-#     key                 = "project"
-#     propagate_at_launch = false
-#     value               = "expense"
-#   }
+  tag {
+    key                 = "project"
+    propagate_at_launch = false
+    value               = "expense"
+  }
 }
 
 resource "aws_lb_target_group" "tg" {
