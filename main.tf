@@ -23,7 +23,7 @@ module "public_alb" {
   zone_id       = "Z03008653NMBFHGJP7YNJ"
   tg_arn        = module.frontend.tg_arm
 }
-#
+
 module "private_alb" {
   source        = "./modules/alb"
   env           = var.env
@@ -70,13 +70,11 @@ module "frontend" {
   desired_capacity          = var.desired_capacity
 }
 
-
 module "mysql" {
-  source        = "./modules/rds"
-  vpc_cidr      = var.vpc_cidr
-  component     = "mysql"
-  env           = var.env
-  subnets       = module.vpc.private_subnet
-  vpc_id        = module.vpc.vpc_id
-
+  source    = "./modules/rds"
+  vpc_cidr  = var.vpc_cidr
+  component = "mysql"
+  env       = var.env
+  subnets   = module.vpc.private_subnet
+  vpc_id    = module.vpc.vpc_id
 }
