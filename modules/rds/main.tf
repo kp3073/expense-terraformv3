@@ -6,17 +6,17 @@ resource "aws_security_group" "main" {
 
 
   ingress {
-    from_port        = 3306
-    to_port          = 3306
-    protocol         = "tcp"
-    cidr_blocks      = [var.vpc_cidr]
+    from_port = 3306
+    to_port   = 3306
+    protocol  = "tcp"
+    cidr_blocks = [var.vpc_cidr]
   }
 
   egress {
-    from_port        = 0
-    to_port          = 0
-    protocol         = "-1"
-    cidr_blocks      = ["0.0.0.0/0"]
+    from_port = 0
+    to_port   = 0
+    protocol  = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
   }
   tags = {
     Name = "${var.env}-${var.component}-sg"
@@ -24,24 +24,24 @@ resource "aws_security_group" "main" {
 }
 
 resource "aws_db_subnet_group" "main" {
-  name       = "${var.env}-${var.component} -sbgroup"
+  name       = "${var.env}-${var.component}-sbgroup"
   subnet_ids = var.subnets
 
   tags = {
-    Name = "${var.env}-${var.component} -sbgroup"
+    Name = "${var.env}-${var.component}-sbgroup"
   }
 }
 
 resource "aws_rds_cluster" "main" {
-  cluster_identifier      = "aurora-cluster-dev"
-  engine                  = "aurora-mysql"
-  engine_version          = "5.7.mysql_aurora.2.11.3"
-  db_subnet_group_name    = aws_db_subnet_group.main.name
+  cluster_identifier   = "aurora-cluster-dev"
+  engine               = "aurora-mysql"
+  engine_version       = "5.7.mysql_aurora.2.11.3"
+  db_subnet_group_name = aws_db_subnet_group.main.name
   vpc_security_group_ids = [aws_security_group.main.id]
-  database_name           = "dummy"
-  master_username         = data.aws_ssm_parameter.master_username.value
-  master_password         = data.aws_ssm_parameter.master_password.value
-  skip_final_snapshot = true
+  database_name        = "dummy"
+  master_username      = data.aws_ssm_parameter.master_username.value
+  master_password      = data.aws_ssm_parameter.master_password.value
+  skip_final_snapshot  = true
 }
 
 
