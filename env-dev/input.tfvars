@@ -11,4 +11,3 @@ bastion_node_cidr = ["172.31.30.152/32"]
 max_size                   = 1
 min_size                   = 1
 desired_capacity           = 1
-project_name               = "expense"
